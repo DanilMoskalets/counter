@@ -1,7 +1,19 @@
 .app{
     text-align: center;
 }
+.app :active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
 
-.num{
+.num div{
     font-size: 50px;
+}
+
+.buttonError{
+    color: red;
+}
+
+.inputError{
+    border: 1px solid red;
 }

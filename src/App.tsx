@@ -1,5 +1,6 @@
 import React, {ChangeEvent, ChangeEventHandler, FormEvent, useState} from 'react';
 import s from './App.module.css'
+import {Button} from "./Components/Button";
 
 
 
@@ -54,19 +55,19 @@ export const App = () => {
 
 
     const disabledInc = counter === maxValue || settings  ? true : false
-    const disabledReset =  counter ===  startValue ? true : false
+    const disabledReset =  counter ===  startValue || settings ? true : false
     return (
         <div className={s.app}>
-            <div>
-                <div className={s.num}>{ counter}</div>
-                <button disabled={disabledInc} onClick={incrementCounter} >inc</button>
-                <button disabled={disabledReset} onClick={resetCounter}>reset</button>
+            <div className={s.num}>
+                <div className={counter === maxValue ? s.buttonError : ''} >{ counter}</div>
+                <Button callBack={incrementCounter} disabled={disabledInc}>Inc</Button>
+                <Button callBack={resetCounter} disabled={disabledReset}>Reset</Button>
             </div>
             <div>
                 <form onSubmit={handleSubmit}>
-                    <input type='number' value={ maxValue}   onChange={ handleOnChangeInputMax}/>
-                    <input type='number'  value={ startValue} onChange={handleOnChangeInputStart}/>
-                    <button  type='submit'> Set </button>
+                    <input className={maxValue === startValue || maxValue < 0 ? s.inputError : ''} type='number' value={ maxValue}   onChange={ handleOnChangeInputMax}/>
+                    <input  className={startValue >= maxValue || startValue < 0 ? s.inputError : ''} type='number'  value={ startValue} onChange={handleOnChangeInputStart}/>
+                    <Button type={'submit'} >Set</Button>
                 </form>
             </div>
         </div>
