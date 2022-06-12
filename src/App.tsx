@@ -1,10 +1,13 @@
 import React, {ChangeEvent, ChangeEventHandler, FormEvent, useState} from 'react';
 import s from './App.module.css'
 import {Button} from "./Components/Button";
+import {Counter} from "./Components/Counter";
+import {TypedUseSelectorHook, useSelector} from "react-redux";
+import {counterReducer} from "./reducer/counter-reducer";
 
 
 
-type initialStateType = {
+export type initialStateType = {
     counter: number,
     maxValue: number
     startValue: number
@@ -13,23 +16,18 @@ type initialStateType = {
 }
 
 
-const initialState = {
-    counter: 0,
-    maxValue: 1,
-    startValue: 0,
-    settings: true,
-    error: false
-}
-
+export const useTypedSelector: TypedUseSelectorHook<counterReducer> = useSelector
 
 
 export const App = () => {
-    const [value, setValue] = useState<initialStateType>(initialState)
-    const {counter, maxValue, startValue, settings, error} = value
+    // const [value, setValue] = useState<initialStateType>(initialState)
+    const value  = useSelector<initialStateType>(state => state)
+
+    // const {counter, maxValue, startValue, settings, error} = value
 
     const incrementCounter = () => {
         if(counter <= maxValue ) {
-            setValue({...value, counter:  counter + 1})
+            setValue({...value, counter:  value.counter +1})
         }
     }
 
@@ -54,14 +52,15 @@ export const App = () => {
 
 
 
-    const disabledInc = counter === maxValue || settings  ? true : false
-    const disabledReset =  counter ===  startValue || settings ? true : false
     return (
         <div className={s.app}>
             <div className={s.num}>
-                <div className={counter === maxValue ? s.buttonError : ''} >{ counter}</div>
-                <Button callBack={incrementCounter} disabled={disabledInc}>Inc</Button>
-                <Button callBack={resetCounter} disabled={disabledReset}>Reset</Button>
+                <Counter
+                    counter={counter}
+                    settings={settings}
+                    maxValue={maxValue}
+                    startValue={startValue}
+                />
             </div>
             <div>
                 <form onSubmit={handleSubmit}>
