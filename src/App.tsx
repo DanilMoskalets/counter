@@ -2,52 +2,50 @@ import React, {ChangeEvent, ChangeEventHandler, FormEvent, useState} from 'react
 import s from './App.module.css'
 import {Button} from "./Components/Button";
 import {Counter} from "./Components/Counter";
-import {TypedUseSelectorHook, useSelector} from "react-redux";
-import {counterReducer} from "./reducer/counter-reducer";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {
+    counterReducer,
+    handleOnChangeInputMaxAC,
+    handleSubmitAC,
+    OnChangeInputStartAC
+} from "./reducer/counter-reducer";
+import {AppStateType} from "./redux/store";
 
 
 
 export type initialStateType = {
-    counter: number,
-    maxValue: number
+    counter: number
+    maxValue: number,
     startValue: number
-    settings: boolean
-    error: boolean
 }
 
 
-export const useTypedSelector: TypedUseSelectorHook<counterReducer> = useSelector
-
-
 export const App = () => {
-    // const [value, setValue] = useState<initialStateType>(initialState)
-    const value  = useSelector<initialStateType>(state => state)
+    const dispatch = useDispatch()
+    const {counter, maxValue, startValue}  = useSelector<AppStateType, initialStateType>(state => state)
+
 
     // const {counter, maxValue, startValue, settings, error} = value
 
-    const incrementCounter = () => {
-        if(counter <= maxValue ) {
-            setValue({...value, counter:  value.counter +1})
-        }
-    }
-
-    const resetCounter = () => {
-        setValue({...value, counter: startValue, settings: true})
-    }
 
     const handleOnChangeInputMax = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue({...value, maxValue: Number(e.currentTarget.value)})
+       if(Math.sign(maxValue)) {
+           console.log(maxValue)
+           dispatch(handleOnChangeInputMaxAC(Number(e.currentTarget.value)))
+       }
+       // setMaxValue(e.currentTarget.value)
     }
 
     const handleOnChangeInputStart = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue({...value, startValue: Number(e.currentTarget.value)})
+        dispatch(OnChangeInputStartAC(Number(e.currentTarget.value)))
+        //setValue({...value, startValue: Number(e.currentTarget.value)})
 
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setValue({...value, counter: startValue, settings: false})
-
+       // setValue({...value, counter: startValue, settings: false})
+        dispatch(handleSubmitAC())
     }
 
 
@@ -56,10 +54,7 @@ export const App = () => {
         <div className={s.app}>
             <div className={s.num}>
                 <Counter
-                    counter={counter}
-                    settings={settings}
-                    maxValue={maxValue}
-                    startValue={startValue}
+
                 />
             </div>
             <div>
