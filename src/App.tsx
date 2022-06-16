@@ -29,15 +29,16 @@ export const App = () => {
 
 
     const handleOnChangeInputMax = (e: ChangeEvent<HTMLInputElement>) => {
-       if(Math.sign(maxValue)) {
-           console.log(maxValue)
-           dispatch(handleOnChangeInputMaxAC(Number(e.currentTarget.value)))
-       }
+        console.log(maxValue ,'maxValue utside')
+        if(Number(e.currentTarget.value) >=0) {
+            console.log(maxValue, 'maxValue')
+            dispatch(handleOnChangeInputMaxAC(Number(e.currentTarget.value)))
+        }
        // setMaxValue(e.currentTarget.value)
     }
 
     const handleOnChangeInputStart = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(OnChangeInputStartAC(Number(e.currentTarget.value)))
+        if(Number(e.currentTarget.value) >=0) dispatch(OnChangeInputStartAC(Number(e.currentTarget.value)))
         //setValue({...value, startValue: Number(e.currentTarget.value)})
 
     }

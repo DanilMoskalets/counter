@@ -27,8 +27,8 @@ export type resetCounter = {
 
 const initialState = {
     counter: 0,
-    maxValue: 1,
-    startValue: 1,
+    maxValue: 0,
+    startValue: 0,
 }
 
 
