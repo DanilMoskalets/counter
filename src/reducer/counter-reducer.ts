@@ -1,4 +1,4 @@
-import {initialStateType} from "../App";
+import {initialStateType} from "../Components/App/App";
 import {ChangeEvent} from "react";
 
 
@@ -24,16 +24,20 @@ export type handleSubmitAT = {
 export type resetCounter = {
     type: 'RESET-COUNTER'
 }
+export type settingsStartAT = {
+    type: 'SETTINGS-START'
+}
 
 const initialState = {
     counter: 0,
     maxValue: 0,
     startValue: 0,
+    settings: false
 }
 
 
 
-export type ActionType = incrementCounterAT | resetCounter | handleOnChangeInputMaxAT | OnChangeInputStartAT | handleSubmitAT
+export type ActionType = incrementCounterAT | resetCounter | handleOnChangeInputMaxAT | OnChangeInputStartAT | handleSubmitAT | settingsStartAT
 
 export const counterReducer = (state = initialState, action: ActionType) => {
     switch (action.type) {
@@ -47,8 +51,10 @@ export const counterReducer = (state = initialState, action: ActionType) => {
                 return {...state, maxValue: action.event}
         case "ONCHANGE-INPUT-START":
             return {...state, startValue: action.event}
+        case "SETTINGS-START":
+            return {...state, settings: true}
         case "HANDLE-SUBMIT":
-            return {...state, counter: state.startValue}
+            return {...state, counter: state.startValue, settings: false}
         default:
             return state
     }
@@ -56,6 +62,10 @@ export const counterReducer = (state = initialState, action: ActionType) => {
 
 export const incrementCounterAC = (): ActionType => {
     return {type: 'INCREMENT-COUNTER'}
+}
+
+export const settingsStartAC = (): ActionType => {
+    return {type: 'SETTINGS-START'}
 }
 
 export const handleSubmitAC = (): ActionType => {

@@ -1,13 +1,23 @@
-.app{
-    text-align: center;
+div {
+    display: flex;
 }
+
+.app{
+   display: flex;
+    text-align: center;
+    width: 150px;
+    height: 200px;
+}
+
 .app :active, :hover, :focus {
     outline: 0;
     outline-offset: 0;
 }
 
 .num div{
+    padding: 10px;
     font-size: 50px;
+    border: 1px solid black;
 }
 
 .buttonError{

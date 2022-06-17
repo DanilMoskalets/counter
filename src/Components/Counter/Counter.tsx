@@ -1,12 +1,12 @@
 // @flow
 import * as React from 'react';
-import s from "../App.module.css";
-import {Button} from "./Button";
+import s from "../App/App.module.css";
+import {Button} from "../Button";
 import {FC} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {initialStateType} from "../App";
-import {AppStateType} from "../redux/store";
-import {incrementCounterAC, resetCounterAC} from "../reducer/counter-reducer";
+import {initialStateType} from "../App/App";
+import {AppStateType} from "../../redux/store";
+import {incrementCounterAC, resetCounterAC, settingsStartAC} from "../../reducer/counter-reducer";
 
 type counterPropsType = {};
 export const Counter: FC<counterPropsType> = () => {
@@ -21,6 +21,10 @@ export const Counter: FC<counterPropsType> = () => {
         dispatch(resetCounterAC())
     }
 
+    const handleSettingsStart = () => {
+      dispatch(settingsStartAC())
+    }
+
     const disabledInc = counter === maxValue ? true : false
     const disabledReset = counter === startValue ? true : false
     return (
@@ -30,6 +34,7 @@ export const Counter: FC<counterPropsType> = () => {
             >Inc</Button>
             <Button callBack={handleResetCounter} disabled={disabledReset}
             >Reset</Button>
+            <Button callBack={handleSettingsStart}>Setting</Button>
         </div>
     );
 };
